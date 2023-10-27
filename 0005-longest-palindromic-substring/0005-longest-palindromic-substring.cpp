@@ -1,72 +1,61 @@
-// #include <iostream>
-// #include <string>
-// #include <vector>
-// using namespace std;
-
 class Solution {
 public:
     string longestPalindrome(string s) {
         int n = s.length();
-        if (n == 0) {
-            return "";
+        
+        if (n < 2) {
+            return s; // If the string has 0 or 1 character, it's already a palindrome.
         }
-
-        // Create a dynamic 2D boolean vector to store whether substrings are palindromes.
-        // dp[i][j] will be 'true' if the substring from index 'i' to 'j' is a palindrome.
-        // Initialize all entries to 'false'.
-        vector<vector<bool>> dp(n, vector<bool>(n, false));
-
-        int start = 0; // Starting index of the longest palindromic substring found so far.
-        int maxLen = 1; // Length of the longest palindromic substring found so far.
-
-        // All substrings of length 1 are palindromes, so set dp[i][i] to 'true'.
-        for (int i = 0; i < n; ++i) {
-            dp[i][i] = true;
-        }
-
-        // Check for palindromes of length 2.
-        for (int i = 0; i < n - 1; ++i) {
-            if (s[i] == s[i + 1]) {
-                dp[i][i + 1] = true;
-                start = i;
-                maxLen = 2;
+        
+        string newStr = preProcess(s); // Transform the string to handle even and odd-length palindromes
+        
+        n = newStr.length();
+        vector<int> P(n, 0); // Initialize an array to store the palindrome lengths at each position
+        int C = 0; // Center of the rightmost palindrome
+        int R = 0; // Right boundary of the rightmost palindrome
+        
+        for (int i = 1; i < n - 1; i++) {
+            int i_mirror = 2 * C - i; // Mirror of i with respect to C
+            
+            // Check if i is within the rightmost palindrome's boundary
+            if (R > i) {
+                P[i] = min(R - i, P[i_mirror]); // Take the minimum of its mirror and remaining length
+            }
+            
+            // Attempt to expand palindrome centered at i
+            while (newStr[i + 1 + P[i]] == newStr[i - 1 - P[i]]) {
+                P[i]++;
+            }
+            
+            // If palindrome centered at i expands past R, adjust center and right boundary
+            if (i + P[i] > R) {
+                C = i;
+                R = i + P[i];
             }
         }
-
-        // Check for palindromes of length 3 or more.
-        for (int len = 3; len <= n; ++len) {
-            for (int i = 0; i < n - len + 1; ++i) {
-                int j = i + len - 1; // Ending index of the current substring.
-                
-                // Check if the current substring is a palindrome and its inner substring is also a palindrome.
-                if (s[i] == s[j] && dp[i + 1][j - 1]) {
-                    dp[i][j] = true;
-                    
-                    // Update the start index and maximum length if a longer palindrome is found.
-                    if (len > maxLen) {
-                        start = i;
-                        maxLen = len;
-                    }
-                }
+        
+        int maxLen = 0; // Length of the longest palindrome
+        int centerIndex = 0; // Center of the longest palindrome
+        
+        for (int i = 1; i < n - 1; i++) {
+            if (P[i] > maxLen) {
+                maxLen = P[i];
+                centerIndex = i;
             }
         }
-
-        // Extract and return the longest palindromic substring.
+        
+        int start = (centerIndex - maxLen) / 2; // Start index of the longest palindrome in the original string
         return s.substr(start, maxLen);
     }
+    
+    string preProcess(const string& s) {
+        int n = s.length();
+        if (n == 0) return "^$"; // Add delimiters to handle even-length palindromes
+        string newStr = "^";
+        for (int i = 0; i < n; i++) {
+            newStr += "#" + s.substr(i, 1);
+        }
+        newStr += "#$";
+        return newStr;
+    }
 };
-
-// int main() {
-//     Solution solution;
-//     string s1 = "babad";
-//     string result1 = solution.longestPalindrome(s1);
-    
-//     cout << "Longest palindromic substring in s1: " << result1 << endl;
-
-//     string s2 = "cbbd";
-//     string result2 = solution.longestPalindrome(s2);
-    
-//     cout << "Longest palindromic substring in s2: " << result2 << endl;
-
-//     return 0;
-// }
