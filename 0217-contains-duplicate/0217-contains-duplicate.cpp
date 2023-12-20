@@ -53,11 +53,21 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
+        // Sorts the input vector 'nums' in ascending order
+        sort(nums.begin(), nums.end());
+
+        // Initializes a boolean variable 'flag' as false to track if a duplicate is found
         bool flag = false;
-        for(int i =0;i<nums.size()-1;i++){
-            if(nums[i] == nums[i+1]) return true;
+
+        // Iterates through the sorted array from index 0 to the second-to-last element
+        for (int i = 0; i < nums.size() - 1; i++) {
+            // Checks if the current element is equal to the next element
+            if (nums[i] == nums[i + 1])
+                // If a duplicate is found, returns true immediately
+                return true;
         }
+
+        // Returns the value of 'flag', which remains false if no duplicates are found
         return flag;
     }
 };
