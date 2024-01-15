@@ -5,33 +5,33 @@
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
 
-<pre><strong>Input:</strong> word1 = "abc", word2 = "pqr"
+<pre style="position: relative;"><strong>Input:</strong> word1 = "abc", word2 = "pqr"
 <strong>Output:</strong> "apbqcr"
 <strong>Explanation:</strong>&nbsp;The merged string will be merged as so:
 word1:  a   b   c
 word2:    p   q   r
 merged: a p b q c r
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
-<pre><strong>Input:</strong> word1 = "ab", word2 = "pqrs"
+<pre style="position: relative;"><strong>Input:</strong> word1 = "ab", word2 = "pqrs"
 <strong>Output:</strong> "apbqrs"
 <strong>Explanation:</strong>&nbsp;Notice that as word2 is longer, "rs" is appended to the end.
 word1:  a   b 
 word2:    p   q   r   s
 merged: a p b q   r   s
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p><strong class="example">Example 3:</strong></p>
 
-<pre><strong>Input:</strong> word1 = "abcd", word2 = "pq"
+<pre style="position: relative;"><strong>Input:</strong> word1 = "abcd", word2 = "pq"
 <strong>Output:</strong> "apbqcd"
 <strong>Explanation:</strong>&nbsp;Notice that as word1 is longer, "cd" is appended to the end.
 word1:  a   b   c   d
 word2:    p   q 
 merged: a p b q c   d
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
